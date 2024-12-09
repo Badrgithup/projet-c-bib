@@ -55,6 +55,10 @@ Return borrowed books, update their status, and manage the borrowing queues.
 
 +Develop a structured solution for real-world problems.
 
+Finally, this project was made by me and my colleague Mr. Mohamed Borhen Khlifi.
+
+
+
 
 
 
