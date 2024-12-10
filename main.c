@@ -64,6 +64,7 @@ struct Client {
     char adresse[200];
 };
 
+
 int ajout() {
     FILE *bib_txt;
     struct livre li;
@@ -90,6 +91,7 @@ int ajout() {
     return 0;
 }
 
+
 int afficher() {
     FILE *bib_txt;
     int i = 1;
@@ -101,6 +103,7 @@ int afficher() {
         }
         fclose(bib_txt);
     } else {
+        printf("Aucun livre a afficher\n");
         return -1;
     }
     return 0;
@@ -147,6 +150,7 @@ char* chercher(char nom_a_chercher[50]) {
     return NULL;
 }
 
+
 char* chercherclient(char id_a_chercher[50]) {
     static char result[1024];
     FILE *client_txt;
@@ -187,6 +191,7 @@ char* chercherclient(char id_a_chercher[50]) {
     return NULL;
 }
 
+
 int supprimer(char nom_a_supprimer[50]) {
     FILE *bib_txt = fopen("bib.txt", "rt");
     FILE *tt_txt = fopen("tt.txt", "wt");
@@ -218,6 +223,7 @@ int supprimer(char nom_a_supprimer[50]) {
     return 0;
 }
 
+
 int afficher_cl() {
     FILE *client_txt;
     int i = 1;
@@ -229,10 +235,12 @@ int afficher_cl() {
         }
         fclose(client_txt);
     } else {
+        printf("aucun client a afficher\n");
         return -1;
     }
     return 0;
 }
+
 
 int ajout_client() {
     FILE *client_txt;
@@ -261,6 +269,7 @@ int ajout_client() {
     return 0;
 }
 
+
 void mettre_a_jour_etat_livre(char titre[50], int nouvel_etat) {
     FILE *bib_txt = fopen("bib.txt", "rt");
     FILE *temp_txt = fopen("temp.txt", "wt");
@@ -284,6 +293,7 @@ void mettre_a_jour_etat_livre(char titre[50], int nouvel_etat) {
     rename("temp.txt", "bib.txt");
 }
 
+
 void emprunt_livre(queue *livres, queue *clients, char titre[50], char id[50]) {
     char *livre_ligne = chercher(titre);
     char *client_ligne=chercherclient(id);
@@ -292,7 +302,7 @@ void emprunt_livre(queue *livres, queue *clients, char titre[50], char id[50]) {
         return;
     }
     if (!client_ligne){
-        printf("client non trouve");
+        printf("client non trouve.\n");
         return;
     }
 
@@ -316,8 +326,9 @@ void emprunt_livre(queue *livres, queue *clients, char titre[50], char id[50]) {
     printf("Livre emprunte avec succes !\n");
 }
 
+
 void rendre_livre(queue *livres, queue *clients) {
-    if ((MAX_QUEUE_SIZE + livres->rear - livres->front) % MAX_QUEUE_SIZE == 0) {
+    if (queue_size(livres) == 0) {
         printf("Aucun livre en cours d'emprunt.\n");
         return;
     }
